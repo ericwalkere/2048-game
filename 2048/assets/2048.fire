@@ -4035,7 +4035,9 @@
       "__id__": 109
     },
     "_enabled": true,
-    "_defaultClip": null,
+    "_defaultClip": {
+      "__uuid__": "7b764e25-0d7b-4858-953d-c55ee4cefdce"
+    },
     "_clips": [
       {
         "__uuid__": "7b764e25-0d7b-4858-953d-c55ee4cefdce"

@@ -161,7 +161,7 @@ cc.Class({
           let num = this.board[r][c];
           this.newPos = this.boardMap.getTilePos(r, c);
           this.spawnTileItem(config.TILE_SKIN[num]);
-          if (num === 32) {
+          if (num === 2048) {
             Emitter.instance.emit("WinGame");
           }
         }

@@ -7,6 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
+
 const config = require("GameConfig");
 const mathf = require("utilities");
 const Emitter = require("EventEmitter");
@@ -25,6 +26,9 @@ cc.Class({
     Emitter.instance.registerEvent("slideU", this.slideUp.bind(this));
     Emitter.instance.registerEvent("slideD", this.slideDown.bind(this));
 
+    this.init();
+  },
+  init() {
     this.newPos = {};
     this.board = config.TILE;
     this.rows = config.BOARD.ROWS;
@@ -143,6 +147,13 @@ cc.Class({
   },
 
   displayBoard() {
+    if (!this.hasEmptyTile()) {
+      if(!this.hasAvailableMoves()){
+        Emitter.instance.emit("isLose");
+        return;
+      }
+      return;
+    }
     this.node.removeAllChildren();
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
@@ -150,6 +161,9 @@ cc.Class({
           let num = this.board[r][c];
           this.newPos = this.boardMap.getTilePos(r, c);
           this.spawnTileItem(config.TILE_SKIN[num]);
+          if (num === 32) {
+            Emitter.instance.emit("WinGame");
+          }
         }
       }
     }
@@ -164,5 +178,26 @@ cc.Class({
       }
     }
     return false;
+  },
+
+  hasAvailableMoves() {
+    for (let r = 0; r < this.rows; r++) {
+      for (let c = 0; c < this.cols; c++) {
+        if (this.board[r][c] !== 0) {
+          if (c - 1 >= 0 && this.board[r][c - 1] === this.board[r][c]) {
+            return true;
+          }
+          if (c + 1 < this.cols && this.board[r][c + 1] === this.board[r][c]) {
+            return true;
+          }
+          if (r - 1 >= 0 && this.board[r - 1][c] === this.board[r][c]) {
+            return true;
+          }
+          if (r + 1 < this.rows && this.board[r + 1][c] === this.board[r][c]) {
+            return true;
+          }
+        }
+      }
+    }
   },
 });

@@ -58,6 +58,7 @@ cc.Class({
     for (let r = 0; r < this.rows; r++) {
       let row = this.board[r];
       row = this.slide(row);
+
       this.board[r] = row;
       for (let c = 0; c < this.cols; c++) {
         if (this.board[r][c] !== 0) {
@@ -134,6 +135,9 @@ cc.Class({
     if (!this.hasEmptyTile()) {
       return;
     }
+    if (this.hasAvailableMoves()) {
+      return;
+    }
     let found = false;
     while (!found) {
       let r = mathf.random(this.rows);
@@ -148,8 +152,8 @@ cc.Class({
 
   displayBoard() {
     if (!this.hasEmptyTile()) {
-      if(!this.hasAvailableMoves()){
-        Emitter.instance.emit("isLose");
+      if (!this.hasAvailableMoves()) {
+        Emitter.instance.emit("LoseGame");
         return;
       }
       return;

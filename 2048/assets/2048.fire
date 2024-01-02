@@ -162,7 +162,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 474.5819212738724
+      "z": 549.9261314031186
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -4324,7 +4324,9 @@
       "__id__": 108
     },
     "_isWinGame": false,
-    "LosePanel": null,
+    "LosePanel": {
+      "__id__": 113
+    },
     "_isLoseGame": false,
     "_id": "98QEtexIpFOIFeJw2ezD92"
   }

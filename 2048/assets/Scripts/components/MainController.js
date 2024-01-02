@@ -16,9 +16,30 @@ cc.Class({
   onLoad() {
     this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
     this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+    cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
 
     Emitter.instance.registerOnce("WinGame", this.isWin.bind(this));
     Emitter.instance.registerOnce("LoseGame", this.isLose.bind(this));
+  },
+
+  onKeyDown: function (event) {
+    if (this._isWinGame || this._isLoseGame) {
+      return;
+    }
+    switch (event.keyCode) {
+      case cc.macro.KEY.a:
+        Emitter.instance.emit("slideL");
+        break;
+      case cc.macro.KEY.d:
+        Emitter.instance.emit("slideR");
+        break;
+      case cc.macro.KEY.w:
+        Emitter.instance.emit("slideU");
+        break;
+      case cc.macro.KEY.s:
+        Emitter.instance.emit("slideD");
+        break;
+    }
   },
 
   onTouchStart(event) {
@@ -28,8 +49,10 @@ cc.Class({
   },
 
   onTouchMove(event) {
-    if(this._isWinGame || this._isLoseGame){return;}
-
+    if (this._isWinGame || this._isLoseGame) {
+      return;
+    }
+    
     let currentX = event.getLocationX();
     let currentY = event.getLocationY();
     let deltaX = currentX - this._touchStartX;

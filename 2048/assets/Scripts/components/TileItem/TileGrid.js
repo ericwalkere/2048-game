@@ -58,7 +58,6 @@ cc.Class({
     for (let r = 0; r < this.rows; r++) {
       let row = this.board[r];
       row = this.slide(row);
-
       this.board[r] = row;
       for (let c = 0; c < this.cols; c++) {
         if (this.board[r][c] !== 0) {
@@ -132,10 +131,7 @@ cc.Class({
   },
 
   createTileItem() {
-    if (!this.hasEmptyTile()) {
-      return;
-    }
-    if (this.hasAvailableMoves()) {
+    if (!this.hasEmptyTile() || this.hasAvailableMoves()) {
       return;
     }
     let found = false;
@@ -151,11 +147,8 @@ cc.Class({
   },
 
   displayBoard() {
-    if (!this.hasEmptyTile()) {
-      if (!this.hasAvailableMoves()) {
-        Emitter.instance.emit("LoseGame");
-        return;
-      }
+    if (!this.hasEmptyTile() && !this.hasAvailableMoves()) {
+      Emitter.instance.emit("LoseGame");
       return;
     }
     this.node.removeAllChildren();
@@ -185,6 +178,7 @@ cc.Class({
   },
 
   hasAvailableMoves() {
+    cc.log(this.board);
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
         if (this.board[r][c] !== 0) {

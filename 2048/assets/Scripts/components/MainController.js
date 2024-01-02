@@ -11,6 +11,8 @@ cc.Class({
     _isWinGame: false,
     LosePanel: cc.Node,
     _isLoseGame: false,
+    tutorialPanel:cc.Node,
+    _isLock:false,
   },
 
   onLoad() {
@@ -23,7 +25,7 @@ cc.Class({
   },
 
   onKeyDown: function (event) {
-    if (this._isWinGame || this._isLoseGame) {
+    if (this._isLock) {
       return;
     }
     switch (event.keyCode) {
@@ -49,7 +51,7 @@ cc.Class({
   },
 
   onTouchMove(event) {
-    if (this._isWinGame || this._isLoseGame) {
+    if (this._isLock) {
       return;
     }
     
@@ -78,11 +80,21 @@ cc.Class({
 
   isWin() {
     this.winPanel.active = true;
-    this._isWinGame = true;
+    this._isLock = true;
   },
 
   isLose() {
     this.LosePanel.active = true;
-    this._isLoseGame = true;
+    this._isLock = true;
   },
+
+  openTutorial(){
+    this.tutorialPanel.active = true;
+    this._isLock = true;
+  },
+
+  closeTutorial(){
+    this.tutorialPanel.active = false;
+    this._isLock = false;
+  }
 });

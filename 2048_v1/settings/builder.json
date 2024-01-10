@@ -1,6 +1,6 @@
 {
   "android-instant": {
-    "REMOTE_SERVER_ROOT": "",
+    "REMOTE_SERVER_ROOT": "http://192.168.1.57:7456/preview-android-instant/",
     "host": "",
     "pathPattern": "",
     "recordPath": "",
@@ -17,6 +17,7 @@
   "encryptJs": true,
   "excludeScenes": [],
   "fb-instant-games": {},
+  "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
@@ -29,14 +30,14 @@
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.2048_v1",
+  "packageName": "org.cocos2d.game2048_v1",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait",
     "zip": false
   },
   "startScene": "5a91bdaf-b30c-488c-a709-38c2beb26090",
-  "title": "2048_v1",
+  "title": "2048",
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",

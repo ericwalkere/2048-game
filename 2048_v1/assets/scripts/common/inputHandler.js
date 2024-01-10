@@ -6,11 +6,16 @@ cc.Class({
 
   properties: {
     _isPress: false,
+    _touchStartX: 0,
+    _touchStartY: 0,
   },
 
   onLoad() {
     cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
     cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+
+    this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+    this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
   },
 
   onKeyDown(event) {
@@ -30,14 +35,41 @@ cc.Class({
         break;
       case cc.macro.KEY.s:
         Emitter.instance.emit(code.INPUT_S);
-
         break;
     }
   },
 
   onKeyUp() {
-    this.scheduleOnce(() => {
-      this._isPress = false;
-    }, 0.2);
+    this._isPress = false;
+  },
+
+  onTouchStart(event) {
+    this._touchStartX = event.getLocationX();
+    this._touchStartY = event.getLocationY();
+    this.isPress = false;
+  },
+
+  onTouchMove(event) {
+    let currentX = event.getLocationX();
+    let currentY = event.getLocationY();
+    let deltaX = currentX - this._touchStartX;
+    let deltaY = currentY - this._touchStartY;
+
+    if (deltaX > 10 && !this.isPress) {
+      this.isPress = true;
+      Emitter.instance.emit(code.INPUT_D);
+    } else if (deltaX < -10 && !this.isPress) {
+      this.isPress = true;
+      Emitter.instance.emit(code.INPUT_A);
+    } else if (deltaY > 10 && !this.isPress) {
+      this.isPress = true;
+      Emitter.instance.emit(code.INPUT_W);
+    } else if (deltaY < -10 && !this.isPress) {
+      this.isPress = true;
+      Emitter.instance.emit(code.INPUT_S);
+    }
+
+    this._touchStartX = currentX;
+    this._touchStartY = currentY;
   },
 });

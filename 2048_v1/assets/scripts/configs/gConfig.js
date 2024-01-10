@@ -47,12 +47,12 @@ module.exports = {
     },
     1024: {
       skin: "#F8F85B", // Thay đổi màu sắc này
-      textColor: "#FFFFFF",
+      textColor: "#FF0000",
       text: "1024",
     },
     2048: {
       skin: "#1A7A02", // Thay đổi màu sắc này
-      textColor: "#FFFFFF",
+      textColor: "#FF0000",
       text: "2048",
     },
     4096: {
